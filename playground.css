@@ -1,0 +1,87 @@
+
+body {
+    background-color: darkgreen;
+}
+
+
+#wrapper {
+    background-color: lightcoral;
+    max-width: 640px;
+
+}   
+#keep-ratio {
+    width: 100%;
+    padding-bottom: 50%;
+    background-color: lightblue;
+    background-image: url("w.jpg");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.video-content {
+    width: 200px;
+    height: 100px;
+    background-color: pink;
+    overflow: hidden;
+}
+
+.video-play-icon {
+    display: block;
+    background-image:url(data:image/svg+xml;base64,PHN2ZyBmaWxsPSIjMDAwIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj48cGF0aCBkPSJNMjU2LDkyLjQ4MWM0NC40MzMsMCw4Ni4xOCwxNy4wNjgsMTE3LjU1Myw0OC4wNjRDNDA0Ljc5NCwxNzEuNDExLDQyMiwyMTIuNDEzLDQyMiwyNTUuOTk5cy0xNy4yMDYsODQuNTg4LTQ4LjQ0OCwxMTUuNDU1Yy0zMS4zNzIsMzAuOTk0LTczLjEyLDQ4LjA2NC0xMTcuNTUyLDQ4LjA2NHMtODYuMTc5LTE3LjA3LTExNy41NTItNDguMDY0QzEwNy4yMDYsMzQwLjU4Nyw5MCwyOTkuNTg1LDkwLDI1NS45OTlzMTcuMjA2LTg0LjU4OCw0OC40NDgtMTE1LjQ1M0MxNjkuODIxLDEwOS41NSwyMTEuNTY4LDkyLjQ4MSwyNTYsOTIuNDgxIE0yNTYsNTIuNDgxIGMtMTEzLjc3MSwwLTIwNiw5MS4xMTctMjA2LDIwMy41MThjMCwxMTIuMzk4LDkyLjIyOSwyMDMuNTIsMjA2LDIwMy41MmMxMTMuNzcyLDAsMjA2LTkxLjEyMSwyMDYtMjAzLjUyQzQ2MiwxNDMuNTk5LDM2OS43NzIsNTIuNDgxLDI1Niw1Mi40ODFMMjU2LDUyLjQ4MXogTTIwNi41NDQsMzU3LjE2MVYxNTkuODMzbDE2MC45MTksOTguNjY2TDIwNi41NDQsMzU3LjE2MXoiPjwvcGF0aD48L3N2Zz4K);
+    width: 50%;
+    height: 50%;
+    margin: 25% auto;
+    background-repeat: no-repeat;
+    opacity: 0.5;
+}
+
+.video-play-icon:hover {
+    opacity: 1;
+}
+
+html {
+    font-size: 40px;
+}
+
+.paragraph {
+    font-size: 16px;
+}
+
+p {
+    font-size: 2rem;
+}
+
+body {
+    margin: 0;
+}
+
+#positioned {
+    
+    padding: 10px;
+    
+    border: 20px solid red;
+    margin: 30px;
+    width: 100px;
+    height: 50px;
+}
+
+#positioned-again {
+    position: relative;
+    top: 0;
+    margin: 30px;
+    padding: 20px;
+    border: 10px solid red;
+    width: 100px;
+    height: 50px;
+}
+
+#drag-me {
+    background-color: lightsalmon;
+    width: 300px;
+    height: 200px;
+    padding: 10px;
+    margin-top: 50px;
+    margin-left: 5px;
+    border: 20px solid red;
+}
