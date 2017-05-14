@@ -68,6 +68,9 @@ function enableDrag( elem ) {
     } );
 
     $( window ).on( 'mouseup touchend', function ( event ) {
+        if ( isDragStarted === false ) {
+            return;
+        }
         
         isDragStarted = false;
         $substitute.remove();
