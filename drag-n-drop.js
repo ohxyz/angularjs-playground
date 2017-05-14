@@ -50,7 +50,7 @@ function enableDrag( elem ) {
     var isDragStarted = false;
     var $substitute = null;
 
-    $( window ).on( 'mousedown', function ( event ) {
+    $( window ).on( 'mousedown touchstart', function ( event ) {
         
         if ( event.target !== elem ) {
             return;
@@ -67,13 +67,14 @@ function enableDrag( elem ) {
         $substitute = makeSubstitue( elem );
     } );
 
-    $( window ).on( 'mouseup', function ( event ) {
+    $( window ).on( 'mouseup touchend', function ( event ) {
         
         isDragStarted = false;
         $substitute.remove();
     });
 
-    $( window ).on( 'mousemove', function ( event ) {
+    $( window ).on( 'mousemove touchmove', function ( event ) {
+        
         
         if ( isDragStarted === false 
                 || oldMouseXY === null ) {

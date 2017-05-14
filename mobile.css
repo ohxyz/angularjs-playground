@@ -1,0 +1,127 @@
+/* http://meyerweb.com/eric/tools/css/reset/ 
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+body {
+	line-height: 1;
+}
+ol, ul {
+	list-style: none;
+}
+blockquote, q {
+	quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
+
+/* START: My CSS */
+
+header {
+    background-image: url("image-header.jpg");
+    position: relative;
+    top: 0;
+    left: 0;
+    right: 0;
+    background-repeat: no-repeat;
+    background-size: cover;
+    padding-top: 20%;
+}
+
+#main {
+    margin: 0 auto;
+    max-width: 1500px;
+}
+
+li {
+    display: block;
+    margin: 1%;
+    background-color: purple;
+}
+
+.gallery-image {
+    display: block;
+    border: 5px solid red;
+    width: 100%;
+    /* boder-box effect: width or height includes border padding and content */
+    box-sizing: border-box;
+}
+    li:nth-child(2) .gallery-image {
+       border: 5px solid #333;
+    }
+
+footer {
+    background-color: #333;
+    height: 300px;
+}
+
+@media only screen and (min-width: 740px) {
+    
+    body {
+        background-color: green;
+    }
+    
+    #gallery {
+        overflow: hidden;
+    }
+    
+    li {
+        width: 48%;
+        float: left;
+    }
+    
+}
+
+@media only screen and ( min-width: 980px ) {
+    
+    body {
+        background-color: yellow;
+    }
+    
+    li {
+        width: 31.33%;
+    }
+    
+@media only screen and ( min-width: 1200px ) {
+    
+    body {
+        background-color: lightcoral;
+    }
+    
+    li {
+        width: 23%;
+    }
+}
