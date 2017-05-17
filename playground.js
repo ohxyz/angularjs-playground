@@ -57,3 +57,15 @@
 
 
 })();
+
+
+var youtube = '<iframe style="width:100%;height:100%;" id="trailer" src="https://www.youtube.com/embed/tR-mDxUpWts?rel=0&amp;controls=0&amp;showinfo=0" frameborder="0" allowfullscreen></iframe>';
+var options = {
+    width: 640,
+    height: 360,
+    top: '15%',
+    content: youtube,
+    triggerElement: '#open-popup'
+};
+
+new Popup( options );

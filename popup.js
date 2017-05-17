@@ -1,73 +1,138 @@
-/* Playground Libs */
+/* 
+ * Popup uses jQuery 
+ */
+
+var Utils = Utils || function () {};
+
+Utils.prototype.onclickoutside = function ( element, callback ) {
+    
+    var $element = jQuery( element );
+    
+    jQuery( document ).on( 'click touchstart', function ( event ) {
+            
+        var clickedElement = event.target;
+        
+        if ( !$element.is( clickedElement )
+                && $element.has( clickedElement ).length === 0 ) {
+
+            callback( event );
+        }
+    });
+};
+
+var UTILS = new Utils();
+
+/* START: Popup implementation */
 function Popup( options ) {
 
-    var settings = $.extend( {
+    this.settings = $.extend( {
         
         width: '90%',
         height: 400,
-        content: 'This is a modal popup box.',
-        border: '1px solid #333',
-        backgroundColor: '#eee',
+        content: '',
+        backgroundColor: 'transparent',
         onopen: function() {},
         onclose: function() {},
-        enableModal: false,
+        enableModal: true,
+        enableShadow: true,
         enableAlwaysCenter: true,
+        triggerElement: null,
+        top: null,
         maxNumber: 1
         
     }, options );
     
-    if ( Popup.popups.length >= settings.maxNumber ) {
+    if ( Popup.popups.length >= this.settings.maxNumber ) {
         throw "Maximum number of popups reached.";
     }
 
     /* START: Create a popup window. */
     this.$popup = $( '<div>' );
-    this.$closeButton = $( '<div>' );
+    this.onclose = this.settings.onclose;
+    this.onopen = this.settings.onopen;
+    this.isClosed = false;
     
-    this.onclose = settings.onclose;
-    this.onopen = settings.onopen;
+    var $closeButton = $( '<div>' );
+    var $crossBarOne = $( '<div>' );
+    var $crossBarTwo = $( '<div>' );
+    var $body = $( 'body' );
     
-    var $body = $( 'body' )  
-    var popupWidth = settings.width;
-    var popupHeight = settings.height;
-    var content = settings.content;
+    var triggerElement = this.settings.triggerElement;
+    var popupWidth = this.settings.width;
+    var popupHeight = this.settings.height;
+    var popupContent = this.settings.content;
+    var popupShadow = this.settings.enableShadow === true ? '0 0 10px rgba(0, 0, 0, 1)' : 'none';
     
     var popupCss = {
+        
         position: 'fixed',
-        zIndex: 100,
+        zIndex: 1000,
         width: popupWidth,
         height: popupHeight,
-        border: settings.border,
-        backgroundColor: settings.backgroundColor
+        border: '1px solid rgba(255, 255, 255, 0.4)',
+        borderRadius: 2,
+        backgroundColor: this.settings.backgroundColor,
+        boxShadow: popupShadow,
+        
     };
     
     var closeButtonCss = {
         
+        top: -55,
         position: 'absolute',
-        top: 0,
-        right: 0,
-        width: 64,
-        height: 64,
+        right: -7,
+        width: 40,
+        height: 40,
         cursor: 'pointer',
-        backgroundColor: '#aaa'
+        backgroundColor: 'transparent',
+        opacity: 0.4
+
+    };
+
+    var crossBarCss = {
+        
+        position: 'absolute',
+        left: 18,
+        width: 40,
+        height: 40,
+        width: 4,
+        backgroundColor: 'white',
+        borderRadius: 2
+        
     };
     
-    this.$closeButton.css( closeButtonCss );
-    this.$popup.css( popupCss );
+    $crossBarOne.css( crossBarCss ).css( 'transform', 'rotate(45deg)' );
+    $crossBarTwo.css( crossBarCss ).css( 'transform', 'rotate(-45deg)' );
     
-    this.$popup.append( this.$closeButton )
-        .append( content )
+    $closeButton.append( $crossBarOne, $crossBarTwo );
+    $closeButton.css( closeButtonCss );
+    
+    $closeButton
+        .mouseenter( function () {
+            
+            $( this ).css( 'opacity', 0.7 );
+        } )
+        .mouseleave( function () { 
+        
+            $( this ).css( 'opacity', closeButtonCss.opacity );
+            
+        } );
+
+    this.$popup.css( popupCss );
+    this.$popup.append( $closeButton )
+        .append( popupContent )
         .appendTo( $body );
         
-    this.$popup.data( 'isClosed', false );
+    this.$popup.isClosed = false;
     this.setPopupPosition();
     
-    settings.onopen();
+    this.isOpen = true;
+    this.settings.onopen();
     Popup.popups.push( this );
 
     /* END: Create a popup window. */
-    
-    if ( settings.enableModal === true ) {
+
+    if ( this.settings.enableModal === true ) {
         
         if ( Popup.isModalCreated === false ) {
 
@@ -79,8 +144,8 @@ function Popup( options ) {
                 left: 0,
                 right: 0,
                 bottom: 0,
-                backgroundColor: 'rgba(0, 0, 0, 0.8)',
-                zIndex: 99,
+                backgroundColor: 'rgba(0, 0, 0, 0.95)',
+                zIndex: 999,
                 display: 'none'
                 
             };
@@ -95,16 +160,40 @@ function Popup( options ) {
     }
     
     var self = this;
-    
-    this.$closeButton.on('click touchstart', function () {
+      
+    $closeButton.on('click touchstart', function () {
+        
         self.close();
     });
-          
-    if ( settings.enableAlwaysCenter === true ) {
+        
+    UTILS.onclickoutside( this.$popup, function ( event ) {
+
+        if ( $( event.target ).is( triggerElement ) ){
+            return;
+        }
+        
+        if ( self.isClosed === true ) {
+            return;
+        }
+        
+        self.close();
+    });
+
+    if ( this.settings.enableAlwaysCenter === true ) {
         
         $( window ).resize( function () {
             self.setPopupPosition();
         });
+    }
+    
+    if ( triggerElement !== null ) {
+        
+        this.close();
+        $( triggerElement ).click( function ( event ) {
+            
+            event.preventDefault();
+            self.open();
+        } );
     }
 }
 
@@ -129,31 +218,41 @@ Popup.prototype.getCenteringSettings = function ( ) {
 Popup.prototype.setPopupPosition = function ( ) {
     
     var centeringSettings = this.getCenteringSettings ();
+    var top = ( this.settings.top === null ) ? centeringSettings.top : this.settings.top;
+    
     var popupCss = {
-        top: centeringSettings.top,
+        top: top,
         left: centeringSettings.left,   
     };
     
     this.$popup.css( popupCss );
+    return this;
 }
 
 Popup.prototype.open = function () {
     
+    if ( Popup.isModalEnabled === true ) {      
+        Popup.$modal.show();
+    }
+
     this.$popup.show();
-    this.$popup.data( 'isClosed', false );
+    this.$popup.isClosed = false;
     this.onopen();
+    return this;
 }
 
 Popup.prototype.close = function () {
     
     this.$popup.hide();
-    this.$popup.data( 'isClosed', true );
+    this.$popup.isClosed = true;
     this.onclose();
     
     if ( Popup.isModalEnabled === true 
             && Popup.isAllClosed() === true ) {
+        
         Popup.$modal.hide();
     }
+    return this;
 }
 
 $.extend( Popup, {
@@ -172,7 +271,7 @@ $.extend( Popup, {
         
         for ( var i = 0; i < this.popups.length; i ++ ) {
             
-            var isClosed = this.popups[ i ].$popup.data( 'isClosed' );
+            var isClosed = this.popups[ i ].$popup.isClosed;
             isAllClosed = isAllClosed && isClosed;
         }
         
@@ -180,17 +279,18 @@ $.extend( Popup, {
     }
     
 } );
+/* END: Popup implementation */
 
-$( '#open-popup' ).click( function () {
-    var youtube = '<iframe style="width:100%;height:100%;" id="trailer" src="https://www.youtube.com/embed/tR-mDxUpWts?rel=0&amp;controls=0&amp;showinfo=0" frameborder="0" allowfullscreen></iframe>';
-    var options = {
-        width: 640,
-        height: 360,
-        content: youtube
-    };
-    var popup = Popup.popups.length >= 1 ? Popup.popups[0].open() : new Popup( options );
-});
 
-for ( var i = 0; i < 0; i ++ ) {
-    new Popup();
-}
+
+
+
+
+
+
+
+
+
+
+
+
