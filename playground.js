@@ -69,3 +69,18 @@ var options = {
 };
 
 new Popup( options );
+
+
+var initPerfectScrollbar = function () {
+    
+    var containers = document.querySelectorAll( '#wrapper' );
+    
+    containers.forEach( function ( container ) {
+        console.log( container );
+        Ps.initialize( container );
+        
+        
+    } );
+}
+
+initPerfectScrollbar();
