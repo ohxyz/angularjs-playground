@@ -1,0 +1,39 @@
+<!doctype html>
+<htmllang="">
+    <head>
+        <meta charset="utf-8">
+        <title>PP Forms</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="static/index.css" type="text/css">
+    </head>
+    <body>
+        <h1>PP Forms</h1>
+        <div ng-app="myApp">
+            <div id="my-form" ng-controller="MyFormController">
+                <form id="form1" name="form1" novalidate >
+                    <label for="start-date">Bill start date</label>
+                    <input type="text" id="start-date" name="start-date" placeholder="Enter start date of your bill (DD/MM/YYY)" 
+                           ng-model="bill.startDate" 
+                           ng-change="handleStartDateChange()"
+                           ng-blur="handleStartDateBlur()"
+                           ng-required="true" />
+                    <br />
+                    <label for="end-date">Bill end state</label>
+                    <input type="text" id="end-date" name="end-date" placeholder="Enter end date of your bill (DD/MM/YYY)"
+                           ng-model="bill.endDate" ng-required="true" />
+                    <br />
+                    <label for="usage">Bill usage</label>
+                    <input type="number" id="usage" name="usage" placeholder=""
+                           ng-model="bill.usage" step="0.01" min="0" max="100" ng-required="true" />
+                    <br />
+                    <input type="submit" id="request-a-quote" name="request-a-quote" value="Request a quote" />
+                    <br />
+                    Result: {{ bill | json }}
+                </form>
+            </div>
+        </div>
+        <script src="angular/angular.min.js"></script>
+        <script src="angular/app.js"></script>
+    </body>
+</html>
