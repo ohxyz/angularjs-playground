@@ -1,7 +1,16 @@
 angular.module( 'myApp', [ 'myForm' ] );
 
-angular.module( 'myForm', [ ] )
-       .controller( 'MyFormController', [ '$scope', function ( $scope ) { 
+angular.module( 'myForm', [] )
+       .controller( 'MyFormController', [ '$scope', function ( $scope ) {
+
+            var startDateLiteral = getOzDateLiteral( new Date() );
+            var endDateLiteral = getOzDateLiteral( getDateAfterSomeDays( new Date(), 85 ) );
+
+            $scope.bill = {
+
+                startDate: startDateLiteral,
+                endDate: endDateLiteral
+            };
 
             $scope.handleStartDateChange = function () {
 
@@ -15,37 +24,13 @@ angular.module( 'myForm', [ ] )
                     return;
                 }
 
-                if ( validateDateString( $scope.bill.startDate ) === false ) {
+                if ( validateDateLiteral( $scope.bill.startDate ) === false ) {
                     
                     return;
                 }
 
-                var startDateLiteral = $scope.bill.startDate;
-
-                var dateRegex = /(\d{2})[/](\d{2})[/](\d{4})/;
-
-                startDateLiteral = startDateLiteral.replace( dateRegex, '$2/$1/$3');
-                startDate = new Date( startDateLiteral );
-
-                var daysAfter = 85;
-                var millisecondsAfter = daysAfter * 24 * 60 * 60 * 1000;
-                var endDate = new Date( startDate.getTime() + millisecondsAfter );
-
-                var endDateDate = endDate.getDate();
-                var endDateDateLiteral = endDateDate < 10
-                                       ? '0' + endDateDate
-                                       : endDateDate.toString();
-
-                var endDateMonth = ( endDate.getMonth() + 1 );
-                var endDateMonthLiteral = endDateMonth < 10
-                                        ? '0' + endDateMonth
-                                        : endDateMonth.toString();
-
-                var endDateLiteral = endDateDateLiteral + '/' +
-                                     endDateMonthLiteral + '/' +
-                                     endDate.getFullYear().toString();
-
-                console.log( 1, endDateLiteral );
+                startDateLiteral = $scope.bill.startDate;
+                var endDateLiteral = getOzDateLiteralAfterSomeDays( startDateLiteral, 85 );
 
                 $scope.bill.endDate = endDateLiteral;
             }
@@ -53,28 +38,66 @@ angular.module( 'myForm', [ ] )
        } ] );
 
 
-function validateDateString( dateString ) {
+function getDateAfterSomeDays( dateObject, daysAfter ) {
 
-    if ( dateString === undefined ) {
+    var millisecondsAfter = daysAfter * 24 * 60 * 60 * 1000;
+    return new Date( dateObject.getTime() + millisecondsAfter );
+}
+
+function getOzDateLiteralAfterSomeDays( ozDateLiteral, daysAfter ) {
+
+    var dateRegex = /(\d{2})[/](\d{2})[/](\d{4})/;
+    var normalDateLiteral = ozDateLiteral.replace( dateRegex, '$2/$1/$3');
+    var normalDate = new Date( normalDateLiteral );
+    var dateAfter = getDateAfterSomeDays( normalDate, daysAfter );
+
+    return getOzDateLiteral( dateAfter );
+
+}
+
+function getOzDateLiteral( dateObjectOrLiteral ) {
+    
+    var date;
+
+    if ( dateObjectOrLiteral === undefined ) {
+
+        date = new Date();
+    }
+    
+    date = new Date( dateObjectOrLiteral );
+
+    var dateOfDate = date.getDate();
+    var monthOfDate = date.getMonth() + 1;
+
+    var literal = ( dateOfDate > 9 ? '' : '0' ) + dateOfDate + '/'
+                + ( monthOfDate > 9 ? '' : '0' ) + monthOfDate + '/'
+                + date.getFullYear();
+
+    return literal;
+}
+
+function validateDateLiteral( dateLiteral ) {
+
+    if ( dateLiteral === undefined ) {
 
         return false;
     }
 
-    var slashes = dateString.match( /[/]/g );
+    var slashes = dateLiteral.match( /[/]/g );
 
     if ( slashes === null || slashes.length !== 2 ) {
 
         return false;
     }
     
-    var dateTrimmed = dateString.replace( /\s+/g, '' );
+    var dateTrimmed = dateLiteral.replace( /\s+/g, '' );
     
     if ( dateTrimmed.length !== 10 ) {
 
         return false;
     }
 
-    var dateMonthYear = dateTrimmed.split( '/');
+    var dateMonthYear = dateTrimmed.split( '/' );
 
     var date = parseInt( dateMonthYear[0], 10 );
     var month = parseInt( dateMonthYear[1], 10 );
