@@ -11,22 +11,40 @@
         <h1>PP Forms</h1>
         <div ng-app="myApp">
             <div id="my-form" ng-controller="MyFormController">
-                <form id="form1" name="form1" novalidate >
+                <form id="form1" name="form1" ng-submit="handleSubmit()" novalidate >
                     <label for="start-date">Bill start date</label>
-                    <input type="text" id="start-date" name="start-date" placeholder="Enter start date of your bill (DD/MM/YYY)" 
+                    <input type="text" id="start-date" name="start-date" 
+                           placeholder="Enter start date of your bill (DD/MM/YYY)"
                            ng-model="bill.startDate" 
                            ng-change="handleStartDateChange()"
                            ng-blur="handleStartDateBlur()"
                            ng-required="true" />
                     <br />
+                    <div ng-show="form1['start-date'].$touched || form1.$submitted">
+                        <small ng-show="form1['start-date'].$error.required">Required</small>
+                        <small ng-show="form1['start-date'].$error.validFormat">Invalid Format</small>
+                    </div>
+                    
                     <label for="end-date">Bill end state</label>
-                    <input type="text" id="end-date" name="end-date" placeholder="Enter end date of your bill (DD/MM/YYY)"
-                           ng-model="bill.endDate" ng-required="true" />
+                    <input type="text" id="end-date" name="end-date" 
+                           placeholder="Enter end date of your bill (DD/MM/YYY)"
+                           ng-model="bill.endDate"
+                           ng-required="true" />
                     <br />
+
                     <label for="usage">Bill usage</label>
-                    <input type="number" id="usage" name="usage" placeholder=""
-                           ng-model="bill.usage" step="0.01" min="0" max="100" ng-required="true" />
+                    <input type="number" id="usage" name="usage" placeholder="Daily usage"
+                           step="0.01" min="0" max="10" 
+                           ng-model="bill.usage"
+                           ng-change="handleUsageChange()"
+                           ng-required="true" />
                     <br />
+                    <div ng-show="form1['usage'].$touched || form1.$submitted">
+                        <small ng-show="form1['usage'].$error.required">Required</small>
+                        <small ng-show="form1['usage'].$error.max">Less than 10</small>
+                        <small ng-show="form1['usage'].$error.min">Larger than 0</small>
+                    </div>
+
                     <input type="submit" id="request-a-quote" name="request-a-quote" value="Request a quote" />
                     <br />
                     Result: {{ bill | json }}

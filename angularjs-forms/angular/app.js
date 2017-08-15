@@ -3,18 +3,23 @@ angular.module( 'myApp', [ 'myForm' ] );
 angular.module( 'myForm', [] )
        .controller( 'MyFormController', [ '$scope', function ( $scope ) {
 
-            var startDateLiteral = getOzDateLiteral( new Date() );
-            var endDateLiteral = getOzDateLiteral( getDateAfterSomeDays( new Date(), 85 ) );
-
             $scope.bill = {
 
-                startDate: startDateLiteral,
-                endDate: endDateLiteral
+                startDate: getOzDateLiteral( new Date() ),
+                endDate: getOzDateLiteral( getDateAfterSomeDays( new Date(), 85 ) )
             };
 
-            $scope.handleStartDateChange = function () {
+            console.log( 0, $scope );
 
-                //$scope.bill.endDate = $scope.bill.startDate;
+            $scope.handleStartDateChange = function () {
+                
+                
+
+            };
+
+            $scope.handleSubmit = function () {
+
+                console.log( 'form1', $scope.form1 );
             };
 
             $scope.handleStartDateBlur = function () {
@@ -29,13 +34,14 @@ angular.module( 'myForm', [] )
                     return;
                 }
 
-                startDateLiteral = $scope.bill.startDate;
+                var startDateLiteral = $scope.bill.startDate;
                 var endDateLiteral = getOzDateLiteralAfterSomeDays( startDateLiteral, 85 );
 
                 $scope.bill.endDate = endDateLiteral;
             }
 
        } ] );
+
 
 
 function getDateAfterSomeDays( dateObject, daysAfter ) {
