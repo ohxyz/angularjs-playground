@@ -1,0 +1,9 @@
+@font-face {
+    font-family: "Opensans";
+    src: url("./OpenSans.woff");
+}
+
+@font-face {
+    font-family: "OpensansSemibold";
+    src: url("./OpenSans-Semibold.woff");
+}

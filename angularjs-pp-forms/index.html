@@ -1,0 +1,108 @@
+<!doctype html>
+<htmllang="">
+<head>
+    <meta charset="utf-8">
+    <title>PP Forms</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="static/clientlib.min.0e677c98cff070a52d4e88fddc7de21b.css" type="text/css">
+    <link rel="stylesheet" href="static/origin-ui.css" type="text/css">
+    <link rel="stylesheet" href="static/external.min.d41d8cd98f00b204e9800998ecf8427e.css" type="text/css">
+    <link rel="stylesheet" href="static/predictable-plan-quote.min.47cb89b9be06cc60b7bb08129ca15516.css" type="text/css">
+    <link rel="stylesheet" href="static/index.css" type="text/css">
+
+</head>
+<body>
+  <div ng-app="predictablePlanQuote" class="ng-scope">
+      <div ng-controller="predictablePlanQuoteCtrl as ppQuote" ng-init="init()" class="ng-scope">
+        <div class="container spacing-component-inner-bottom spacing-component-inner-top-half">
+          <form class="form-horizontal" id="ppQuoteForm" name="ppQuoteForm" novalidate="" ng-submit="submit()">
+            <!-- Electricity fields -->
+            <fieldset class="spacing-component-inner-top">
+              <div class="form-group">
+                  <h3 class="col-md-4 col-md-offset-1 control-label">Electricity</h3>
+              </div>
+              <div class="form-group">
+                <label for="start-date-elec" class="col-md-4 col-md-offset-1 control-label">
+                  Start date
+                </label>
+                <div class="col-md-5">
+                  <input
+                      type="text"
+                      class="form-control"
+                      datetime="dd/MM/yyyy"
+                      ng-model="ppQuote.startDateElec"
+                      placeholder="Enter the start date of your electricity bill"
+                      name="startDateElec"
+                      id="start-date-elec"
+                     
+                      required>
+
+                  <validation-icons class="ng-scope"></validation-icons>
+                  <div ng-show="ppQuoteForm.startDateElec.$touched || !areAllBillFieldsValid">
+                    <small ng-show="ppQuoteForm.startDateElec.$error.required" class="help-block">Please enter the start date of your electricity bill</small>
+                    <small ng-show="ppQuoteForm.startDateElec.$error.datetime" class="help-block">Must be DD/MM/YYYY. For example, 11/01/2011</small>
+                    <small ng-show="!elecBill.isStartDateWithinRange" class="help-block">Start date must be between {{ elecBill.minStartDateLiteral }} and {{ elecBill.maxStartDateLiteral}} </small>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="end-date-elec" class="col-md-4 col-md-offset-1 control-label">
+                  End date
+                </label>
+                <div class="col-md-5">
+                  <input
+                      type="text"
+                      class="form-control"
+                      datetime="dd/MM/yyyy"
+                      ng-model="ppQuote.endDateElec"
+                      placeholder="Enter the end date of your electricity bill"
+                      name="endDateElec"
+                      id="end-date-elec"
+                      ng-focus="elecBill.handleEndDateFocus()"
+                      ng-change="elecBill.handleEndDateChange( ppQuote.endDateElec, ppQuote.startDateElec )"
+                      required>
+
+                  <validation-icons class="ng-scope"></validation-icons>
+                  <div ng-show="ppQuoteForm.endDateElec.$touched || !areAllBillFieldsValid">
+                    <small ng-show="ppQuoteForm.startDateElec.$invalid" class="help-block">Please correct start date first</small>
+                    <small ng-show="ppQuoteForm.endDateElec.$error.required" class="help-block">Please enter the end date of your electricity bill</small>
+                    <small ng-show="ppQuoteForm.endDateElec.$error.datetime" class="help-block">Must be DD/MM/YYYY. For example, 11/01/2011</small>
+                    <small ng-show="!elecBill.isEndDateWithinRange" class="help-block">End date must be between {{ elecBill.minEndDateLiteral }} and {{ elecBill.maxEndDateLiteral}} </small>
+                    <small ng-show="!elecBill.isMinDayRangeMet" class="help-block">End date must be {{ elecBill.minDaysInBetween }} days {{ elecBill.getDateAfterMinDaysContent( ppQuote.startDateElec ) }}more than start date</small>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="average-daily-usage-elec" class="col-md-4 col-md-offset-1 control-label">
+                  Average daily usage(kWh)
+                </label>
+                <div class="col-md-5">
+                  <input
+                      type="text"
+                      class="form-control"
+                      ng-model="ppQuote.averageDailyUsageElec"
+                      placeholder="Enter average dailiy usage of your electricity bill"
+                      name="averageDailyUsageElec"
+                      id="average-daily-usage-elec"
+                    pattern="^(?!\.?$)\d{0,3}(\.\d{0,2})?$"
+                      required>
+
+                  <validation-icons class="ng-scope"></validation-icons>
+                  <div ng-show="ppQuoteForm.averageDailyUsageElec.$touched || !areAllBillFieldsValid">
+                    <small ng-show="ppQuoteForm.averageDailyUsageElec.$error.required" class="help-block">Please enter average daily usage of your electricity bill</small>
+                <small ng-show="ppQuoteForm.averageDailyUsageElec.$error.pattern" class="help-block">Electricity daily average usage must be between 0 and 999.99</small>
+                  </div>
+                </div>
+              </div>
+            </fieldset>
+          </form>
+        </div>
+      </div>
+    </div>
+  <script src="angular/angular.min.js"></script>
+  <script src="angular/app.js"></script>
+</body>
+</html>
