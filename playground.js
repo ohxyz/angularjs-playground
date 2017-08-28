@@ -69,3 +69,14 @@ var options = {
 };
 
 new Popup( options );
+
+var textBox = document.getElementById( 'get-key' );
+
+textBox.addEventListener( 'keypress', function( event ) { 
+
+    console.log( 1, event.keyCode );
+
+}, false );
+
+
+/* END OF FILE */
