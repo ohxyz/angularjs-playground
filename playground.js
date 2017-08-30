@@ -70,17 +70,13 @@ var options = {
 
 new Popup( options );
 
+var textBox = document.getElementById( 'get-key' );
 
-var initPerfectScrollbar = function () {
-    
-    var containers = document.querySelectorAll( '#wrapper' );
-    
-    containers.forEach( function ( container ) {
-        console.log( container );
-        Ps.initialize( container );
-        
-        
-    } );
-}
+textBox.addEventListener( 'keypress', function( event ) { 
 
-initPerfectScrollbar();
+    console.log( 1, event.keyCode );
+
+}, false );
+
+
+/* END OF FILE */

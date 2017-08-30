@@ -1,0 +1,81 @@
+@font-face {
+    font-family: "Opensans";
+    src: url("./OpenSans.woff");
+}
+
+@font-face {
+    font-family: "OpensansSemibold";
+    src: url("./OpenSans-Semibold.woff");
+}
+
+*:focus {
+    outline: none;
+}
+
+body {
+    font-size: 14px;
+    font-family: Opensans, Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing:antialiased;
+}
+
+label {
+    display: inline-block;
+    width: 100px;
+    text-align:right;
+    font-family: OpensansSemibold, Helvetica, Arial, sans-serif;
+    margin-right: 20px;
+    font-weight: bold;
+    color: #2a2a2a;
+
+}
+
+input {
+    padding: 10px 12px;
+    border: 1px solid #d8d8d8;
+    height: 46px;
+    border-radius: 3px;
+    box-sizing: border-box;
+    width: 374px;
+    margin: 10px 0;
+    font-size: 14px;
+    font-family: Opensans, Helvetica, Arial, sans-serif;
+    font-weight: normal;
+}
+
+input[type=text]::-webkit-input-placeholder {
+
+    color: #d8d8d8;
+}
+
+input[type=number] {
+    -webkit-appearance: textfield;
+    -moz-appearance: textfield;
+    appearance: textfield;
+}
+
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    margin: 0; 
+}
+
+input[type=submit] {
+
+    background-color: #f36d00;
+    border: 1px solid #f36d00;
+    font-size: 18px;
+    color: white;
+    padding: 10px 44px;
+    display: inline-block;
+    width: auto;
+}
+
+input.ng-invalid.ng-touched {
+    border-color: #c10c1a;
+}
+
+input.ng-valid.ng-touched {
+    border-color: #d8d8d8;
+}
