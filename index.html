@@ -8,6 +8,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="apple-touch-icon" href="apple-touch-icon.png">
         <link rel="stylesheet" href="playground.css">
+        <link rel="stylesheet" href="perfect-scrollbar.min.css">
         <style>
 
             #pagination {
@@ -29,15 +30,22 @@
         <div id="wrapper">
             <div id="keep-ratio">One two 3</div>
         </div>
-
         <div id="pagination">
             
             <span>9</span><span>9</span><span>9</span><span>9</span><span>9</span><span>9</span><span>9</span><span>9</span><span>9</span><span>9</span><span>9</span><span>9</span><span>9</span><span>9</span><span>9</span><span>9</span>
         </div>
-
         <button id="open-popup">Open</button>
+        
+        <select name="select">
+          <option value="value1">Value 1</option> 
+          <option value="value2" selected>Value 2</option>
+          <option value="value3">Value 3</option>
+        </select>
+        
         <div id="drop-area">
         </div>
+
+        <input type="text" id="get-key" />
         
         <div id="draggable" draggable="true"></div>
         
@@ -61,7 +69,9 @@
         
         <div id="positioned">box 1</div>
         <div id="positioned-again">box 2</div>
+        
         <script src="jquery.min.js"></script>
+        <script src="perfect-scrollbar.min.js"></script>
         <script src="popup.js"></script>
         <script src="drag-n-drop.js"></script>
         <script src="meter.js"></script>
