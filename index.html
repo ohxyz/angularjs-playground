@@ -8,12 +8,33 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="apple-touch-icon" href="apple-touch-icon.png">
         <link rel="stylesheet" href="playground.css">
+        <style>
+
+            #pagination {
+                background-color: #cccccc;
+                margin: 0 auto;
+                max-width: 650px;   
+                height: 10px;
+            }
+
+            #pagination span {
+
+                padding: 4px 8px;
+                border: 1px solid red;
+                float: left;
+            }
+        </style>
     </head>
     <body>
         <div id="wrapper">
             <div id="keep-ratio">One two 3</div>
         </div>
-                
+
+        <div id="pagination">
+            
+            <span>9</span><span>9</span><span>9</span><span>9</span><span>9</span><span>9</span><span>9</span><span>9</span><span>9</span><span>9</span><span>9</span><span>9</span><span>9</span><span>9</span><span>9</span><span>9</span>
+        </div>
+
         <button id="open-popup">Open</button>
         <div id="drop-area">
         </div>
